@@ -1,0 +1,71 @@
+DragDropContext: component that wraps the part of the application we want to enable drag and drop
+  - callbacks
+    - onDragStart
+    - onDragUpdate
+    - onDragEnd
+
+onDragStart
+{
+  draggableId: 'task-1',
+  type: 'TYPE',
+  source: {
+    droppableId: 'column-1',
+    index:0,
+  }
+}
+
+onDragUpdate = {
+  ...start
+  destination: {
+    droppableId: 'column-1',
+    index:1,
+  },
+}
+
+onDragEnd result object Ex:
+{
+  ...update,
+  reason: 'DROP'
+}
+* destination will be null if the user drops outside of the list
+
+
+
+
+
+
+Droppable: component that is a region in which an element can be dropped onto
+- must have a unique droppableId
+- expects child to be a function (uses render props pattern)
+  - arguments
+    - provided
+      - droppableProps (must spread onto the component)
+      - innerRef: DOM node of the component
+      - placeholder: clone of the component used when dragging the element
+        - must be added as a child of the component you designate as droppable
+    - snapshot {
+      isDragging: true,
+      draggingOver: 'column-1
+    }
+
+
+
+
+
+
+
+Draggable: component that can be dragged around and dropped in droppables
+- must have a unique droppableId
+- must have an index
+- expects child to be a function (uses render props pattern)
+  - arguments
+    - provided 
+      - draggableProps (to be spread onto component)
+      - dragHandleProps: part of component you want to use to control the entire component (Ex: icon) 
+          (to be spread onto component)
+      - innerRef
+    - snapshot {
+      isDraggingOver: true,
+      draggingOverWith: 'task-1  //*This will be null if the draggable is not being dragged over the dropable
+    }
+
